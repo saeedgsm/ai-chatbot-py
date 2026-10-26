@@ -22,11 +22,18 @@ def bot(message):
 
     return respone.choices[0].message.content
 
+def chat():
+    print("Welcome to the Chat Bot! Type 'exit' to quit.")
+    while True:
+        user_input = input("You: ")
+        if user_input.lower() == 'exit':
+            print("Goodbye!")
+            break
+        response = bot(user_input)
+        print(f"Bot: {response}")
 
 def main():
-    user_input = input('Ask Someting: ')
-    bot_answer = bot(user_input)
-    print(bot_answer)
+    chat()
 
 
 if __name__ == '__main__':
