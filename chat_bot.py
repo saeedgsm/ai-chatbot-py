@@ -9,18 +9,24 @@ llm = OpenAI(
     base_url="https://api.groq.com/openai/v1"
 )
 
+messages = []
+
 
 def bot(message):
+
+    messages.append({"role": "user", "content": message})
+
     respone = llm.chat.completions.create(
         model='openai/gpt-oss-120b',
-        messages=[
-            {'role': 'user', 'content': message}
-        ],
+        messages=messages,
         temperature=0.7,
         max_tokens=100,
     )
 
-    return respone.choices[0].message.content
+    response_message = respone.choices[0].message.content
+    messages.append({"role": "assistant", "content": response_message})
+
+    return response_message
 
 def chat():
     print("Welcome to the Chat Bot! Type 'exit' to quit.")
@@ -34,6 +40,7 @@ def chat():
 
 def main():
     chat()
+    print(messages)
 
 
 if __name__ == '__main__':
