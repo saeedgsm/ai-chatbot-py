@@ -6,6 +6,7 @@ from openai import OpenAI
 
 dotenv.load_dotenv()
 
+import tiktoken
 
 
 
@@ -48,12 +49,20 @@ class ChatBot:
 
 
     def chat(self):
+        encoding = tiktoken.get_encoding("cl100k_base")
         print("Welcome to the Chat Bot! Type 'q' to quit.")
         while True:
             user_input = input("You: ")
             if user_input.strip().lower() == 'q':
                 print("Goodbye!")
                 break
+
+            token_count = len(encoding.encode(user_input))
+
+            if token_count > 10:
+                print(f"Your input exceeds the maximum token limit of 10. It has {token_count} tokens.")
+                continue
+
             response = self.bot(user_input)
             print(f"Bot: {response}")
 
