@@ -14,8 +14,11 @@ messages = [
     Your name is neon_bot. in the first response, introduce yourself.give short and concise answer'''}
 ]
 
+total_tokens = 0
 
 def bot(message):
+
+    global total_tokens
 
     messages.append({"role": "user", "content": message})
 
@@ -28,6 +31,8 @@ def bot(message):
 
     response_message = respone.choices[0].message.content
     messages.append({"role": "assistant", "content": response_message})
+
+    total_tokens += respone.usage.total_tokens
 
     return response_message
 
@@ -45,7 +50,7 @@ def chat():
 
 def main():
     chat()
-    print(messages)
+    print(f'Consumed total tokens: {total_tokens}')
 
 
 if __name__ == '__main__':
