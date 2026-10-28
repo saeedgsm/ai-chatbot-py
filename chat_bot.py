@@ -9,7 +9,10 @@ llm = OpenAI(
     base_url="https://api.groq.com/openai/v1"
 )
 
-messages = []
+messages = [
+    {'role': 'system', 'content': '''you are a helpful assistant.
+    Your name is neon_bot. in the first response, introduce yourself.give short and concise answer'''}
+]
 
 
 def bot(message):
@@ -28,15 +31,17 @@ def bot(message):
 
     return response_message
 
+
 def chat():
-    print("Welcome to the Chat Bot! Type 'exit' to quit.")
+    print("Welcome to the Chat Bot! Type 'q' to quit.")
     while True:
         user_input = input("You: ")
-        if user_input.lower() == 'exit':
+        if user_input.strip().lower() == 'q':
             print("Goodbye!")
             break
         response = bot(user_input)
         print(f"Bot: {response}")
+
 
 def main():
     chat()
