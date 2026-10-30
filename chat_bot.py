@@ -3,10 +3,10 @@ from pyexpat.errors import messages
 import dotenv
 import os
 from openai import OpenAI
+from transformers import AutoTokenizer
 
 dotenv.load_dotenv()
 
-import tiktoken
 
 
 
@@ -49,7 +49,7 @@ class ChatBot:
 
 
     def chat(self):
-        encoding = tiktoken.get_encoding("cl100k_base")
+        encoding = AutoTokenizer.from_pretrained("meta-llama/Llama-3.1-8B")
         print("Welcome to the Chat Bot! Type 'q' to quit.")
         while True:
             user_input = input("You: ")
@@ -58,6 +58,8 @@ class ChatBot:
                 break
 
             token_count = len(encoding.encode(user_input))
+
+            print(f"Token count for your input: {token_count}")
 
             if token_count > 10:
                 print(f"Your input exceeds the maximum token limit of 10. It has {token_count} tokens.")
